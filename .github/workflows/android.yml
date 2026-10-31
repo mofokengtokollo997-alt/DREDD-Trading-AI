@@ -20,6 +20,9 @@ jobs:
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
 
+      - name: Install Android SDK packages
+        run: sdkmanager "platforms;android-35" "build-tools;35.0.0"
+
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
@@ -27,6 +30,10 @@ jobs:
 
       - name: Extract project
         run: unzip -q DREDD_Trading_AI_Android_v02.zip -d project
+
+      - name: Inspect project structure
+        run: |
+          find project -maxdepth 4 -type f | head -100
 
       - name: Build APK
         run: gradle -p project assembleDebug
